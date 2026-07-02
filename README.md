@@ -29,7 +29,7 @@ source venv/bin/activate  # Windows 請用 venv\Scripts\activate
 pip install -r requirements.txt
 playwright install
 ```
-2. 環境變數設定 (.env)
+### 2. 環境變數設定 (.env)
 在專案根目錄下建立 .env 檔案，填入以下金鑰：
 
 程式碼片段
@@ -39,7 +39,7 @@ GEMINI_API_KEY=your_gemini_api_key_here
 X (Twitter) auth_token (從瀏覽器開發者工具的 Cookies 中獲取)
 X_AUTH_TOKEN=your_x_auth_token_here
 
-3. 執行自動化管線
+### 3. 執行自動化管線
 本專案提供了一鍵執行的 Shell 腳本，會依序執行爬蟲、AI 解析、資料庫寫入，並生成最終網頁：
 ```Bash
 chmod +x run_pipeline.sh
