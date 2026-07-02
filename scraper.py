@@ -1,10 +1,17 @@
 import asyncio
 import json
+import os
+from dotenv import load_dotenv
 from playwright.async_api import async_playwright
+# 載入環境變數
+load_dotenv()
 
 # 設定配置
-TARGET_ACCOUNT = "aleabitoreddit"  # 目標分析師帳號
-AUTH_TOKEN = "4ac9b2a2d1705a2504c38f863772287d52742bd8"  # 填入你複製的 auth_token
+TARGET_ACCOUNT = "aleabitoreddit"
+AUTH_TOKEN = os.getenv("X_AUTH_TOKEN")
+
+if not AUTH_TOKEN:
+    raise ValueError("錯誤：找不到 X_AUTH_TOKEN，請檢查 .env 檔案設定。")
 
 async def scrape_tweets():
     async with async_playwright() as p:
