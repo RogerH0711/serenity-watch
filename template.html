@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@aleabitoreddit — Stock Opinion Tracker</title>
+<style>
+/* 核心樣式保留，避免版面過度複雜化 */
+:root{--paper:#f4f1ea;--card:#fbf9f4;--ink:#1c1a17;--ink-soft:#55514a;--ink-faint:#8a8479;--line:#dcd6c8;--line-strong:#c6bfae;--accent:#1f5c4d;--accent-soft:#e3ede8;--bull:#1f7a4d;--bull-bg:#e6f1e9;--bear:#a8392b;--bear-bg:#f4e3df;--shadow:0 1px 0 rgba(0,0,0,.04),0 10px 28px -18px rgba(28,26,23,.38);}
+body{background:var(--paper);font-family:sans-serif;color:var(--ink);display:flex;margin:0}
+.sidenav{position:fixed;left:0;top:0;bottom:0;width:180px;background:var(--card);border-right:2px solid var(--ink);padding:26px 0;display:flex;flex-direction:column;z-index:10}
+.main{margin-left:180px;flex:1;padding:30px 44px}
+.st{font-weight:900;font-size:30px; border-bottom:2px solid var(--ink); padding-bottom:12px; margin-bottom: 20px;}
+.wall{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:16px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:var(--shadow);cursor:pointer;}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);}
+.tk{font-weight:600;font-size:21px;}
+.badge{float:right; font-weight:700;font-size:13.5px;padding:6px 12px;border-radius:5px;}
+.badge.bull{background:var(--bull-bg);color:var(--bull);}
+.badge.bear{background:var(--bear-bg);color:var(--bear);}
+.badge.neutral{background:var(--line-strong);color:var(--ink-soft);}
+.csumm{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:15px 0;}
+/* 彈出視窗樣式 */
+#ddPage{display:none;position:fixed;inset:0;z-index:200;background:var(--paper);overflow-y:auto}
+.ddbar{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:11px 28px;z-index:5}
+#ddBody{max-width:800px;margin:0 auto;padding:40px}
+.post{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--card)}
+</style>
+</head>
+<body>
+<nav class="sidenav"><div style="padding: 0 22px;"><b>Serenity Tracker</b><br><br><span style="font-size:12px;color:var(--ink-faint)">Automated Opinion Aggregation</span></div></nav>
+<div class="main">
+    <div class="st">Daily Watchlist</div>
+    <div class="wall">
+        {{ DAILY_CARDS }}
+    </div>
+</div>
+
+<!-- 彈出視窗結構 -->
+<div id="ddPage">
+    <div class="ddbar"><button onclick="document.getElementById('ddPage').style.display='none'">← Back</button></div>
+    <div id="ddBody"></div>
+</div>
+
+<script>
+var DD_DATA = {{ DYNAMIC_JSON_DATA }};
+
+// 處理點擊卡片彈出視窗的邏輯
+function dd(ticker) {
+    var data = DD_DATA[ticker];
+    if (!data) return;
+    
+    var html = '<h1 style="border-bottom:2px solid var(--ink); padding-bottom:10px;">' + ticker + ' - History</h1>';
+    
+    data.posts.forEach(function(p) {
+        var color = p.tag === 'Bullish' ? 'green' : (p.tag === 'Bearish' ? 'red' : 'gray');
+        html += '<div class="post">';
+        html += '<div style="font-size:11px; color:gray; margin-bottom:5px;">' + p.d + ' <b style="color:' + color + '">[' + p.tag + ']</b></div>';
+        html += '<div style="font-size:14px; line-height:1.6; white-space:pre-wrap;">' + p.text + '</div>';
+        html += '<div style="margin-top:10px; font-size:11px;"><a href="' + p.url + '" target="_blank">View Original Post ↗</a></div>';
+        html += '</div>';
+    });
+    
+    document.getElementById('ddBody').innerHTML = html;
+    document.getElementById('ddPage').style.display = 'block';
+}
+</script>
+</body>
+</html>

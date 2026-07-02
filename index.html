@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@aleabitoreddit — Stock Opinion Tracker</title>
+<style>
+/* 核心樣式保留，避免版面過度複雜化 */
+:root{--paper:#f4f1ea;--card:#fbf9f4;--ink:#1c1a17;--ink-soft:#55514a;--ink-faint:#8a8479;--line:#dcd6c8;--line-strong:#c6bfae;--accent:#1f5c4d;--accent-soft:#e3ede8;--bull:#1f7a4d;--bull-bg:#e6f1e9;--bear:#a8392b;--bear-bg:#f4e3df;--shadow:0 1px 0 rgba(0,0,0,.04),0 10px 28px -18px rgba(28,26,23,.38);}
+body{background:var(--paper);font-family:sans-serif;color:var(--ink);display:flex;margin:0}
+.sidenav{position:fixed;left:0;top:0;bottom:0;width:180px;background:var(--card);border-right:2px solid var(--ink);padding:26px 0;display:flex;flex-direction:column;z-index:10}
+.main{margin-left:180px;flex:1;padding:30px 44px}
+.st{font-weight:900;font-size:30px; border-bottom:2px solid var(--ink); padding-bottom:12px; margin-bottom: 20px;}
+.wall{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:16px;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px;box-shadow:var(--shadow);cursor:pointer;}
+.card:hover{transform:translateY(-2px);border-color:var(--accent);}
+.tk{font-weight:600;font-size:21px;}
+.badge{float:right; font-weight:700;font-size:13.5px;padding:6px 12px;border-radius:5px;}
+.badge.bull{background:var(--bull-bg);color:var(--bull);}
+.badge.bear{background:var(--bear-bg);color:var(--bear);}
+.badge.neutral{background:var(--line-strong);color:var(--ink-soft);}
+.csumm{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:15px 0;}
+/* 彈出視窗樣式 */
+#ddPage{display:none;position:fixed;inset:0;z-index:200;background:var(--paper);overflow-y:auto}
+.ddbar{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line);padding:11px 28px;z-index:5}
+#ddBody{max-width:800px;margin:0 auto;padding:40px}
+.post{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--card)}
+</style>
+</head>
+<body>
+<nav class="sidenav"><div style="padding: 0 22px;"><b>Serenity Tracker</b><br><br><span style="font-size:12px;color:var(--ink-faint)">Automated Opinion Aggregation</span></div></nav>
+<div class="main">
+    <div class="st">Daily Watchlist</div>
+    <div class="wall">
+        
+        <div class="card bull" onclick="dd('MRVL')">
+            <div>
+                <span class="tk">MRVL</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">儘管股價下跌，但作者仍受Jensen評論影響，相信MRVL有潛力成為下一個兆元公司。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bull" onclick="dd('CCXI')">
+            <div>
+                <span class="tk">CCXI</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">Agility Robotics (via CCXI) is #1 in humanoid robots.
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bull" onclick="dd('TSLA')">
+            <div>
+                <span class="tk">TSLA</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">TSLA Optimus #2, likely to lead humanoid robots in 1 yr.
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bull" onclick="dd('NVDA')">
+            <div>
+                <span class="tk">NVDA</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">推動光子學的架構轉變，該領域有實際營收支持。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bull" onclick="dd('LITE')">
+            <div>
+                <span class="tk">LITE</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">未來兩年產能已售罄，預計2029年開始生產。供應緊張，需向競爭對手採購。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card neutral" onclick="dd('POET')">
+            <div>
+                <span class="tk">POET</span>
+                <span class="badge neutral">Neutral</span>
+            </div>
+            <div class="csumm">在股東大會上提供了LITE的銷售狀況資訊。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bull" onclick="dd('COHR')">
+            <div>
+                <span class="tk">COHR</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">供應受限，暗示市場需求強勁。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bear" onclick="dd('IREN')">
+            <div>
+                <span class="tk">IREN</span>
+                <span class="badge bear">Bearish</span>
+            </div>
+            <div class="csumm">創辦人於公司進行ATM時，給自己頒發巨額股票薪酬，暗示公司治理問題或潛在稀釋風險。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+        <div class="card bull" onclick="dd('META')">
+            <div>
+                <span class="tk">META</span>
+                <span class="badge bull">Bullish</span>
+            </div>
+            <div class="csumm">Meta出售多餘運算資源是AI基礎需求和單位經濟性的正面訊號。預期Meta資本支出和運算需求不縮減，驗證AI基礎設施龐大機會。
+
+...</div>
+            <div style="font-size:11px; color:gray; margin-top:15px;">Latest: 2026-07-02</div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- 彈出視窗結構 -->
+<div id="ddPage">
+    <div class="ddbar"><button onclick="document.getElementById('ddPage').style.display='none'">← Back</button></div>
+    <div id="ddBody"></div>
+</div>
+
+<script>
+var DD_DATA = {"MRVL": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n儘管股價下跌，但作者仍受Jensen評論影響，相信MRVL有潛力成為下一個兆元公司。\n\n【風險】\n股價下跌的市場波動", "url": "https://x.com/aleabitoreddit/status/2072781715916169660"}]}, "CCXI": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nAgility Robotics (via CCXI) is #1 in humanoid robots.\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072741541404406008"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nAgility Robotics (透過CCXI) 被視為美國人形機器人商業化領域的領導者。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072741541404406008"}]}, "TSLA": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nTSLA Optimus #2, likely to lead humanoid robots in 1 yr.\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072741541404406008"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n特斯拉的Optimus機器人預計在一年內取得人形機器人領域的領先地位。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072741541404406008"}]}, "NVDA": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n推動光子學的架構轉變，該領域有實際營收支持。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n推動光子學的架構轉變，該領域有實際營收支持。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nNVDA is driving a revenue-backed architectural shift in photonics, indicating strong market influence and growth potential.\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}]}, "LITE": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n未來兩年產能已售罄，預計2029年開始生產。供應緊張，需向競爭對手採購。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n未來兩年產能已售罄，供應極度緊張，甚至需向競爭對手採購，顯示需求強勁。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nLumentum ($LITE) is fully sold out for two years and experiencing tight supply, even purchasing from competitors, indicating robust demand.\n\n【風險】\nPotential delay in new production until 2029, which could limit future capacity expansion.", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}]}, "POET": {"posts": [{"d": "2026-07-02", "tag": "Neutral", "text": "【論點】\n在股東大會上提供了LITE的銷售狀況資訊。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Neutral", "text": "【論點】\nPOET's shareholder meeting was cited as the source for information regarding LITE's strong demand.\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}]}, "COHR": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n供應受限，暗示市場需求強勁。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\n供應受限，暗示市場需求旺盛。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nCoherent ($COHR) is facing supply constraints, suggesting high demand for its products.\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072726120706007465"}]}, "IREN": {"posts": [{"d": "2026-07-02", "tag": "Bearish", "text": "【論點】\n創辦人於公司進行ATM時，給自己頒發巨額股票薪酬，暗示公司治理問題或潛在稀釋風險。\n\n【風險】\n股東權益稀釋、公司治理不佳、管理層利益與股東利益不一致的風險。", "url": "https://x.com/aleabitoreddit/status/2072610437817078056"}, {"d": "2026-07-02", "tag": "Bearish", "text": "【論點】\n創辦人獲得巨額股票薪酬（11.4億美元），同時公司積極進行60億美元的ATM發行，作者認為這是不言自明的負面信號。\n\n【風險】\n潛在的股東稀釋、公司治理問題、管理層優先順序可能與股東利益不符。", "url": "https://x.com/aleabitoreddit/status/2072610437817078056"}, {"d": "2026-07-02", "tag": "Bearish", "text": "【論點】\n創辦人給自己頒發巨額股票薪酬，同時公司進行大規模ATM募資，此舉可能對股東不利。\n\n【風險】\n股票稀釋風險、公司治理問題、資金分配不當。", "url": "https://x.com/aleabitoreddit/status/2072610437817078056"}, {"d": "2026-07-02", "tag": "Bearish", "text": "【論點】\n創辦人於公司進行60億美元ATM時，給自己頒發逾11.4億美元股票薪酬，引發公司治理與稀釋疑慮。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072610437817078056"}]}, "META": {"posts": [{"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nMeta出售多餘運算資源是AI基礎需求和單位經濟性的正面訊號。預期Meta資本支出和運算需求不縮減，驗證AI基礎設施龐大機會。\n\n【風險】\nNeoclouds（AI基礎設施機會）可能面臨潛在競爭。", "url": "https://x.com/aleabitoreddit/status/2072574465763111166"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nMeta出售運算資源顯示AI需求強勁，單位經濟性佳，預期資本支出不減。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072574465763111166"}, {"d": "2026-07-02", "tag": "Bullish", "text": "【論點】\nMeta出售多餘算力是AI基礎設施需求和單位經濟性的正面訊號，預期資本支出不縮減。\n\n【風險】\n未提及", "url": "https://x.com/aleabitoreddit/status/2072574465763111166"}]}};
+
+// 處理點擊卡片彈出視窗的邏輯
+function dd(ticker) {
+    var data = DD_DATA[ticker];
+    if (!data) return;
+    
+    var html = '<h1 style="border-bottom:2px solid var(--ink); padding-bottom:10px;">' + ticker + ' - History</h1>';
+    
+    data.posts.forEach(function(p) {
+        var color = p.tag === 'Bullish' ? 'green' : (p.tag === 'Bearish' ? 'red' : 'gray');
+        html += '<div class="post">';
+        html += '<div style="font-size:11px; color:gray; margin-bottom:5px;">' + p.d + ' <b style="color:' + color + '">[' + p.tag + ']</b></div>';
+        html += '<div style="font-size:14px; line-height:1.6; white-space:pre-wrap;">' + p.text + '</div>';
+        html += '<div style="margin-top:10px; font-size:11px;"><a href="' + p.url + '" target="_blank">View Original Post ↗</a></div>';
+        html += '</div>';
+    });
+    
+    document.getElementById('ddBody').innerHTML = html;
+    document.getElementById('ddPage').style.display = 'block';
+}
+</script>
+</body>
+</html>
