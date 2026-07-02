@@ -1,0 +1,17 @@
+cat <<EOT >> .gitignore
+# 虛擬環境
+venv/
+__pycache__/
+
+# 環境變數與機密資訊
+.env
+
+# 資料庫與日誌
+serenity.db
+pipeline.log
+
+# 本機端暫存資料檔案（選擇性，建議不放入版本控制）
+raw_tweets.json
+parsed_tweets.json
+.DS_Store
+EOT
