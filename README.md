@@ -23,12 +23,12 @@ git clone https://github.com/RogerH0711/serenity-watch
 cd serenity-watch
 python -m venv venv
 source venv/bin/activate  # Windows 請用 venv\Scripts\activate
+```
 安裝相依套件與瀏覽器驅動：
-
-Bash
+```Bash
 pip install -r requirements.txt
 playwright install
-
+```
 2. 環境變數設定 (.env)
 在專案根目錄下建立 .env 檔案，填入以下金鑰：
 
@@ -41,10 +41,10 @@ X_AUTH_TOKEN=your_x_auth_token_here
 
 3. 執行自動化管線
 本專案提供了一鍵執行的 Shell 腳本，會依序執行爬蟲、AI 解析、資料庫寫入，並生成最終網頁：
-
-Bash
+```Bash
 chmod +x run_pipeline.sh
 ./run_pipeline.sh
+```
 執行完畢後，直接在瀏覽器中打開專案目錄下的 index.html 即可檢視最新儀表板。
 
 (進階：你也可以透過 macOS 的 cron 或是 Linux 的 crontab 設定定時執行 run_pipeline.sh，實現 24 小時全自動更新。)
